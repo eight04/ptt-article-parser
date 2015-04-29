@@ -17,6 +17,23 @@ Install `docopt`.
 pip install docopt
 ```
 
+Usage
+-----
+```
+Usage:
+  pap.py rename [--format=<format>] <file>...
+  pap.py --help
+	
+Options:
+  -h --help             Show this.
+  -f --format=<format>  Set output format. 
+                        [default: [@board] @title by @author.@time.ans]
+```
+Example:
+```
+pap.py rename "file1" "file2" "file3"
+```
+
 Notes
 -----
 * I love camel case.
