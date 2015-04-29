@@ -83,7 +83,7 @@ def rename(file, format):
 	safeRename(file, newFile)
 	
 def main():
-	args = docopt(__doc__, version="0.1.0")
+	args = docopt(__doc__)
 	
 	# Rename file
 	if args["rename"]:
