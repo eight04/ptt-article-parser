@@ -34,6 +34,10 @@ Example:
 pap.py rename "file1" "file2" "file3"
 ```
 
+Output screenshot
+----------------------
+![screenshot](http://i.imgur.com/zISlFeP.png)
+
 Notes
 -----
 * I love camel case.
