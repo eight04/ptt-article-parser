@@ -10,62 +10,46 @@ class Article:
 		self.originalSource = source
 		
 		# Get clean source
-		source = re.sub(br"\x1b\[[\d;]*m", br"", source)
+		self.source = re.sub(br"\x1b\[[\d;]*m", br"", source)
 		
-		# Start parsing meta
-		metaStart = None
-		metaEnd = None
+		class NoMatch(Exception):
+			pass
+		
+		def matchPhase(pattern):
+			match = re.search(pattern, self.source)
+			if not match:
+				raise NoMatch
+			self.source = (self.source[:match.start()] + 
+					self.source[match.end():])
+			return [x.decode(ENCODING) for x in match.groups()]
+				
 		
 		# Get author and board name
-		match = re.search(
-			br"\xa7@\xaa\xcc:?\s*(.+?)\s*\xac\xdd\xaaO:?\s*([^\s]+)",
-			source
-		)
-		if match:
-			if metaStart is None:
-				metaStart = match.start()
-			metaEnd = match.end()
-			self.author = match.group(1).decode(ENCODING)
-			self.board = match.group(2).decode(ENCODING)
-		else:
-			# Get author
-			match = re.search(
-				br"\xa7@\xaa\xcc:?\s*(.+?)\s*(\n|$)",
-				source
+		try:
+			self.author, self.board = matchPhase(
+				br"\xa7@\xaa\xcc:?\s*(.+?)\s*\xac\xdd\xaaO[: ]\s*([^\s]+)"
 			)
-			if match:
-				if metaStart is None:
-					metaStart = match.start()
-				metaEnd = match.end()
-				self.author = match.group(1).decode(ENCODING)
-			
+		except NoMatch:
+			try:
+				self.author, = matchPhase(
+					br"\xa7@\xaa\xcc[: ]\s*(.+?)\s*(?:\n|$)"
+				)
+			except NoMatch:
+				pass
+		
 		# Get title
-		match = re.search(
-			br"\xbc\xd0\xc3D:?\s*(.+)",
-			source
-		)
-		if match:
-			if metaStart is None:
-				metaStart = match.start()
-			metaEnd = match.end()
-			self.title = match.group(1).decode(ENCODING)
+		try:
+			self.title, = matchPhase(br"\xbc\xd0\xc3D[: ]\s*(.+?)\s*(?:\n|$)")
+		except NoMatch:
+			pass
 			
 		# Get time
-		match = re.search(
-			br"\xae\xc9\xb6\xa1:?\s*(.+)",
-			source
-		)
-		if match:
-			if metaStart is None:
-				metaStart = match.start()
-			metaEnd = match.end()
-			timeStr = match.group(1).decode(ENCODING)
-			self.time = time.strptime(timeStr)
-			
-		if None not in (metaStart, metaEnd):
-			source = source[:metaStart] + source[metaEnd:]
-			
-		self.source = source
+		try:
+			self.time, = matchPhase(br"\xae\xc9\xb6\xa1[: ]\s*(.+?)\s*(?:\n|$)")
+		except NoMatch:
+			pass
+		else:
+			self.time = time.strptime(self.time)
 		
 	def getTitle(self):
 		"""Get the title"""

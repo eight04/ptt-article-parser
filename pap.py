@@ -10,7 +10,7 @@ Usage:
 Options:
   -h --help             Show this.
   -f --format=<format>  Set output format. 
-                        [default: [@board] @title by @author.@time.ansi]
+                        [default: [@board] @title by @author.@time.ans]
 
 """
 
@@ -50,6 +50,7 @@ def safeRename(src, new):
 			dest = os.path.join(dir, "{} ({}){}".format(fn, i, ext))
 			if not os.path.isfile(dest):
 				break
+			i += 1
 	
 	os.rename(src, dest)
 

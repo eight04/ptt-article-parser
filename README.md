@@ -2,7 +2,24 @@ PTT Article Parser
 ==================
 一個用來分析 PTT 文章的工具。
 
+Features
+--------
+* 根據文章標題，重新命名檔案名稱
+* 白金緩慢增加中
+
+Dependencies
+------------
+Install python 3.
+https://www.python.org/
+
+Install `docopt`.
+```
+pip install docopt
+```
+
 Notes
 -----
 * I love camel case.
-* [UAO decoder](https://gist.github.com/eight04/186267c150a2dfc0580a)
+* Big5UAO decoder was forked from [andycjw/uao_decode.py][UAO decoder].
+
+[UAO decoder]: https://gist.github.com/andycjw/5617496
