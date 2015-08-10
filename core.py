@@ -9,7 +9,7 @@ class NoMatch(Exception):
 
 def search(pattern, text):
 	"""Wrap re.search. Raise NoMatch error if no match. Return decoded text."""
-	match = re.search(pattern, text)
+	match = re.search(pattern, text, re.MULTILINE)
 	if not match:
 		raise NoMatch
 	return [x.decode(ENCODING) for x in match.groups()]
@@ -24,7 +24,7 @@ class Article:
 		"""Get the title"""
 		if not hasattr(self, "title"):
 			try:
-				self.title, = search(br"\xbc\xd0\xc3D[: ]\s?(.+?)\s*$", self.source, re.M)
+				self.title, = search(br"\xbc\xd0\xc3D[: ]\s?(.+?)\s*$", self.source)
 			except NoMatch:
 				self.title = None
 		return self.title
@@ -33,7 +33,7 @@ class Article:
 		"""Get the author"""
 		if not hasattr(self, "author"):
 			try:
-				self.author, = search(br"\xa7@\xaa\xcc:?\s?(.+?)\s*?(?:\xac\xdd\xaaO|\xaf\xb8\xa4\xba|$)", self.source, re.M)
+				self.author, = search(br"\xa7@\xaa\xcc:?\s?(.+?)\s*?(?:\xac\xdd\xaaO|\xaf\xb8\xa4\xba|$)", self.source)
 			except NoMatch:
 				self.author = None
 		return self.author
@@ -42,7 +42,7 @@ class Article:
 		"""Get post time"""
 		if not hasattr(self, "time"):
 			try:
-				self.time, = search(br"\xae\xc9\xb6\xa1[: ]\s?(.+?)\s*$", self.source, re.M)
+				self.time, = search(br"\xae\xc9\xb6\xa1[: ]\s?(.+?)\s*$", self.source)
 			except NoMatch:
 				self.time = None
 			else:
