@@ -24,7 +24,7 @@ class Article:
 		"""Get the title"""
 		if not hasattr(self, "title"):
 			try:
-				self.title, = search(br"\xbc\xd0\xc3D[: ]\s*(.+?)\s*(?:\n|$)", self.source)
+				self.title, = search(br"\xbc\xd0\xc3D[: ]\s?(.+?)\s*$", self.source, re.M)
 			except NoMatch:
 				self.title = None
 		return self.title
@@ -33,10 +33,7 @@ class Article:
 		"""Get the author"""
 		if not hasattr(self, "author"):
 			try:
-				self.author, = search(
-					br"\xa7@\xaa\xcc:?\s*(.+?)\s*(?:\xac\xdd\xaaO|\xaf\xb8\xa4\xba|\n|$)",
-					self.source
-				)
+				self.author, = search(br"\xa7@\xaa\xcc:?\s?(.+?)\s*?(?:\xac\xdd\xaaO|\xaf\xb8\xa4\xba|$)", self.source, re.M)
 			except NoMatch:
 				self.author = None
 		return self.author
@@ -45,7 +42,7 @@ class Article:
 		"""Get post time"""
 		if not hasattr(self, "time"):
 			try:
-				self.time, = search(br"\xae\xc9\xb6\xa1[: ]\s*(.+?)\s*(?:\n|$)", self.source)
+				self.time, = search(br"\xae\xc9\xb6\xa1[: ]\s?(.+?)\s*$", self.source, re.M)
 			except NoMatch:
 				self.time = None
 			else:
@@ -56,7 +53,7 @@ class Article:
 		"""Get board name"""
 		if not hasattr(self, "board"):
 			try:
-				self.board, = search(br"(?:\xac\xdd\xaaO|\xaf\xb8\xa4\xba)[: ]\s*([^\s]+)", self.source)
+				self.board, = search(br"(?:\xac\xdd\xaaO|\xaf\xb8\xa4\xba)[: ]\s?(\S+)", self.source)
 			except NoMatch:
 				self.board = None
 		return self.board
