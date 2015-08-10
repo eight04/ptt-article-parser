@@ -7,6 +7,11 @@ Features
 * 根據文章標題，重新命名檔案名稱
 * 白金緩慢增加中
 
+Todos
+-----
+* Identify article part and pushes part.
+* Disallow multiple spaces after keyword?
+
 Dependencies
 ------------
 Install python 3.
@@ -23,10 +28,10 @@ Usage
 Usage:
   pap.py rename [--format=<format>] <file>...
   pap.py --help
-	
+
 Options:
   -h --help             Show this.
-  -f --format=<format>  Set output format. 
+  -f --format=<format>  Set output format.
                         [default: [@board] @title by @author.@time.ans]
 ```
 Example:
