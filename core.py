@@ -4,68 +4,62 @@ import re, time, uao_decode
 
 ENCODING = "uao_decode"
 
+class NoMatch(Exception):
+	pass
+
+def search(pattern, text):
+	"""Wrap re.search. Raise NoMatch error if no match. Return decoded text."""
+	match = re.search(pattern, text)
+	if not match:
+		raise NoMatch
+	return [x.decode(ENCODING) for x in match.groups()]
+
 class Article:
 	def __init__(self, source):
 		"""Give source Bytes to build an article"""
 		self.originalSource = source
-
-		# Get clean source
 		self.source = re.sub(br"\x1b\[[\d;]*m", br"", source)
-
-		class NoMatch(Exception):
-			pass
-
-		def matchPhase(pattern):
-			match = re.search(pattern, self.source)
-			if not match:
-				raise NoMatch
-			self.source = (self.source[:match.start()] +
-					self.source[match.end():])
-			return [x.decode(ENCODING) for x in match.groups()]
-
-
-		# Get author and board name
-		try:
-			self.author, self.board = matchPhase(
-				br"\xa7@\xaa\xcc:?\s*(.+?)\s*(?:\xac\xdd\xaaO|\xaf\xb8\xa4\xba)[: ]\s*([^\s]+)"
-			)
-		except NoMatch:
-			try:
-				self.author, = matchPhase(
-					br"\xa7@\xaa\xcc[: ]\s*(.+?)\s*(?:\n|$)"
-				)
-			except NoMatch:
-				pass
-
-		# Get title
-		try:
-			self.title, = matchPhase(br"\xbc\xd0\xc3D[: ]\s*(.+?)\s*(?:\n|$)")
-		except NoMatch:
-			pass
-
-		# Get time
-		try:
-			self.time, = matchPhase(br"\xae\xc9\xb6\xa1[: ]\s*(.+?)\s*(?:\n|$)")
-		except NoMatch:
-			pass
-		else:
-			self.time = time.strptime(self.time)
 
 	def getTitle(self):
 		"""Get the title"""
-		return getattr(self, "title", None)
+		if not hasattr(self, "title"):
+			try:
+				self.title, = search(br"\xbc\xd0\xc3D[: ]\s*(.+?)\s*(?:\n|$)", self.source)
+			except NoMatch:
+				self.title = None
+		return self.title
 
 	def getAuthor(self):
 		"""Get the author"""
-		return getattr(self, "author", None)
+		if not hasattr(self, "author"):
+			try:
+				self.author, = search(
+					br"\xa7@\xaa\xcc:?\s*(.+?)\s*(?:\xac\xdd\xaaO|\xaf\xb8\xa4\xba|\n|$)",
+					self.source
+				)
+			except NoMatch:
+				self.author = None
+		return self.author
 
 	def getTime(self):
 		"""Get post time"""
-		return getattr(self, "time", None)
+		if not hasattr(self, "time"):
+			try:
+				self.time, = search(br"\xae\xc9\xb6\xa1[: ]\s*(.+?)\s*(?:\n|$)", self.source)
+			except NoMatch:
+				self.time = None
+			else:
+				self.time = time.strptime(self.time)
+		return self.time
 
 	def getBoard(self):
 		"""Get board name"""
-		return getattr(self, "board", None)
+		if not hasattr(self, "board"):
+			try:
+				self.board, = search(br"(?:\xac\xdd\xaaO|\xaf\xb8\xa4\xba)[: ]\s*([^\s]+)", self.source)
+			except NoMatch:
+				self.board = None
+		return self.board
 
 	def getBody(self):
 		"""Get article body"""
