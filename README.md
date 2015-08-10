@@ -10,7 +10,6 @@ Features
 Todos
 -----
 * Identify article part and pushes part.
-* Disallow multiple spaces after keyword?
 
 Dependencies
 ------------
