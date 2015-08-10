@@ -42,11 +42,10 @@ class Article:
 		"""Get post time"""
 		if not hasattr(self, "time"):
 			try:
-				self.time, = search(br"\xae\xc9\xb6\xa1[: ]\s?(.+?)\s*$", self.source)
+				self.time, = search(br"\xae\xc9\xb6\xa1[: ]\s?(\w+ \w+ \d+ \d+:\d+:\d+ \d+)", self.source)
+				self.time = time.strptime(self.time)
 			except NoMatch:
 				self.time = None
-			else:
-				self.time = time.strptime(self.time)
 		return self.time
 
 	def getBoard(self):
