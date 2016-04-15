@@ -39,31 +39,16 @@ class Article:
 		# get sign
 		match = re.search(r"※ 發信站: 批踢踢實業坊\(ptt\.cc\), 來自: (\d+\.\d+\.\d+\.\d+) *\n※ 文章網址: (http\w+) *\n?", getattr(self, "body_source", self.source))
 		if match:
-			self.sign = Sign(*match.groups())
-			if hasattr(self, "body_source"):
-				self.body_source = 
+			self.sign = Sign(*match.groups(), match.start(), match.end())
+			
+		else:				
+			# old sign
+			match = re.search(r"※ 發信站: 批踢踢實業坊\(ptt\.cc\)\n◆ From: (\d+\.\d+\.\d+\.\d+)", self.source)
+			if match:
+				self.sign = Sign(match.group(1), None, match.start(), match.end())
 				
-		# get first push
-		
-		
-		if not hasattr(self, "body_source"):
-			self.body_source = self.source
-			
-		# get forward head
-		match = re.search(r"※ \[本文轉錄自\s*([a-zA-Z0-9-_]+)\s*看板\s*(#[a-zA-Z0-9-_]{8})\s*\] *\n?", self.body_source)
-			
-		# get url
-		match = re.search(r"※ 文章網址: (http\S+)", self.source)
-		if match:
-			self.url = match.group(1)
-			if not body_end:
-				body_end = match.start()
-		
-		# get ip
-			
-		# get body
-		
 		# get edits
+		match = re.search(r"※ 編輯: wz02022 (1.175.234.139), 04/15/2016 01:48:28")
 	
 	def search(self, *patterns):
 		for pattern in patterns:
@@ -130,9 +115,11 @@ class Header:
 		self.end = end
 
 class Sign:
-	def __init__(self, ip, url=None):
+	def __init__(self, ip, url, start, end):
 		self.ip = ip
 		self.url = url
+		self.start = start
+		self.end = end
 
 class ForwardFoot:
 	def __init__(self, author, ip, time, start, end):
