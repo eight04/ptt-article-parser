@@ -25,6 +25,10 @@ def rename(file, format_spec):
 	new_file = safe_file_name(new_file)
 	new_file = file.with_name(new_file)
 	
+	if file == new_file:
+		print("Same file name!\n")
+		return
+	
 	if new_file.exists():
 		num = 2
 		
@@ -35,9 +39,15 @@ def rename(file, format_spec):
 				ext = new_file.suffix
 			)
 			temp_file = new_file.with_name(temp_file)
+			
+			if file == temp_file:
+				print("Same file name!\n")
+				return
+				
 			if not temp_file.exists():
 				new_file = temp_file
 				break
+				
 			num += 1
 	
 	print("Rename to {name}...\n".format(name=new_file.name))
