@@ -1,5 +1,5 @@
 [bumpr]
-file = pap/version.py
+file = ptt_article_parser/version.py
 vcs = git
 verbose = true
 tests = python setup.py check -r
