@@ -13,13 +13,14 @@ Options:
   -f --format=<format>  Set output format. 
                         [default: [@board] @title by @author.@time.ans]
   -i --interactive      Use interactive mode, get file name from stdin.
+  <file>                File path. You can use glob pattern
   
 """
 
 from docopt import docopt
 from core import Article
-from safeprint import safeprint
-import time, re, os, sys
+from safeprint import print
+import time, re, os, sys, glob
 
 def makeSafeFileName(path):
 	d = {
@@ -63,7 +64,7 @@ def rename(file, format):
 		
 	dir, filename = os.path.split(file)
 	
-	safeprint("Parse {}...".format(filename))
+	print("Parse {}...".format(filename))
 		
 	article = Article(source)
 	
@@ -80,7 +81,7 @@ def rename(file, format):
 	newFile = pattern.sub(lambda x: repl[x.group()], format)
 	newFile = makeSafeFileName(newFile)
 	
-	safeprint("Rename to {}...\n".format(newFile))
+	print("Rename to {}...\n".format(newFile))
 	
 	safeRename(file, newFile)
 	
@@ -100,8 +101,9 @@ def main():
 					rename(file, args["--format"])
 		else:
 			files = args["<file>"]
-			for file in files:
-				rename(file, args["--format"])
+			for file_pattern in file_patterns:
+				for file in glob.iglob(file_pattern):
+					rename(file, args["--format"])
 
 if __name__ == "__main__":
 	try:
