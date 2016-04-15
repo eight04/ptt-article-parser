@@ -1,6 +1,9 @@
 #! python3
 
-import re, time, uao_decode
+import re, time
+
+from . import uao_decode
+from .version import __version__
 
 ENCODING = "uao_decode"
 

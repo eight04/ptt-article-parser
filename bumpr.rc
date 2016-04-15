@@ -1,0 +1,10 @@
+[bumpr]
+file = pap/version.py
+vcs = git
+verbose = true
+tests = python setup.py check -r
+publish =
+	python setup.py sdist bdist_wheel
+	twine upload dist/*{version}*
+	git push --follow-tags
+	pip install -e .
