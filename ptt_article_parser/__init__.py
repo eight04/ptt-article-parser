@@ -1,6 +1,6 @@
 #! python3
 
-import re, time
+import re, datetime
 
 from . import uao_decode
 from .version import __version__
@@ -36,7 +36,7 @@ class Article:
 		"""Get the author"""
 		if not hasattr(self, "author"):
 			try:
-				self.author, = search(br"\xa7@\xaa\xcc:?\s?(.+?)\s*?(?:\xac\xdd\xaaO|\xaf\xb8\xa4\xba|$)", self.source)
+				self.author, = search(br"\xa7@\xaa\xcc:?\s*?(.+?)\s*?(?:\xac\xdd\xaaO|\xaf\xb8\xa4\xba|$)", self.source)
 			except NoMatch:
 				self.author = None
 		return self.author
@@ -45,8 +45,8 @@ class Article:
 		"""Get post time"""
 		if not hasattr(self, "time"):
 			try:
-				self.time, = search(br"\xae\xc9\xb6\xa1[: ]\s?(\w+ \w+ \d+ \d+:\d+:\d+ \d+)", self.source)
-				self.time = time.strptime(self.time)
+				self.time, = search(br"\xae\xc9\xb6\xa1[: ]\s?(\w+ \w+  ?\d+ \d+:\d+:\d+ \d+)", self.source)
+				self.time = datetime.datetime.strptime(self.time, "%a %b %d %H:%M:%S %Y")
 			except NoMatch:
 				self.time = None
 		return self.time

@@ -26,3 +26,9 @@ def gen_file(files):
 	for exp in files:
 		for file in glob.iglob(exp):
 			yield file
+
+class FormatDummy:
+	def __format__(self, spec):
+		return "None"
+		
+format_dummy = FormatDummy()
