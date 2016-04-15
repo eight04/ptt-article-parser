@@ -9,16 +9,12 @@ Features
 * 根據文章標題，重新命名檔案名稱
 * 白金緩慢增加中
 
-Todos
------
+Install
+-------
 
-* Identify article part and pushes part.
+::
 
-Dependencies
-------------
-
-* docopt
-* safeprint
+	pip install ptt-article-parser
 
 Usage
 -----
@@ -37,12 +33,11 @@ Usage
 	  -i --interactive      Use interactive mode, get file name from stdin.
 	  <file>                File path. You can use glob pattern
 
-Example:
+For example:
 
 ::
 
-	pap.py rename "file1" "file2" "file3"
-
+	pap rename ./M.*
 	
 Output screenshot
 ----------------------
@@ -54,6 +49,17 @@ Notes
 -----
 
 * Big5UAO decoder was forked from `andycjw/uao_decode.py<https://gist.github.com/andycjw/5617496>`__.
+
+Todos
+-----
+
+* Identify article part and pushes part.
+
+Dependencies
+------------
+
+* docopt
+* safeprint
 
 Changelog
 ---------
