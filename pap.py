@@ -5,13 +5,15 @@ PTT Article Parser (PAP)
 
 Usage:
   pap.py rename [--format=<format>] <file>...
+  pap.py rename [--format=<format>] --interactive
   pap.py --help
 	
 Options:
   -h --help             Show this.
   -f --format=<format>  Set output format. 
                         [default: [@board] @title by @author.@time.ans]
-
+  -i --interactive      Use interactive mode, get file name from stdin.
+  
 """
 
 from docopt import docopt
@@ -87,9 +89,19 @@ def main():
 	
 	# Rename file
 	if args["rename"]:
-		files = args["<file>"]
-		for file in files:
-			rename(file, args["--format"])
+		if args["--interactive"]:
+			print("You are using interactive mode, please input the file path. ^Z to exit:")
+			while True:
+				try:
+					file = input()
+				except EOFError:
+					break
+				else:
+					rename(file, args["--format"])
+		else:
+			files = args["<file>"]
+			for file in files:
+				rename(file, args["--format"])
 
 if __name__ == "__main__":
 	try:
