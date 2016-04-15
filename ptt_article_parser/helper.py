@@ -1,6 +1,6 @@
 #! python
 
-import re
+import re, glob
 
 fn_repl = {
 	"/": "／",
@@ -21,3 +21,8 @@ def fn_repl_func(match):
 
 def safe_file_name(name):
 	return fn_pattern.sub(fn_repl_func, name)
+
+def gen_file(files):
+	for exp in files:
+		for file in glob.iglob(exp):
+			yield file

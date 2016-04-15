@@ -6,9 +6,10 @@ PTT Article Parser (PAP)
 Usage:
   pap rename [--format=<format>] <file>...
   pap rename [--format=<format>] --interactive
-  pap --help
+  pap (--help | --version)
 	
 Options:
+  -v --version          Show version.
   -h --help             Show this.
   -f --format=<format>  Set output format. 
                         [default: [{board}] {title} [{author}] ({time:%Y%m%d%H%M%S}).ans]
@@ -17,28 +18,17 @@ Options:
   
 """
 
-import glob
+import docopt
 
-from docopt import docopt
-
-from . import Article
+from . import Article, __version__
 from .tools import rename
+from .helper import gen_file
 
 def main():
-	try:
-		imp_main()
-	except Exception:
-		import traceback
-		traceback.print_exc()		
-		input("\n\nPress enter to exit...")
-		
-		
-def imp_main():
-	args = docopt(__doc__)
+	args = docopt.docopt(__doc__, version=__version__)
 	
 	# Rename file
 	if args["rename"]:
-		from .tools import rename
 		if args["--interactive"]:
 			print("You are using interactive mode, please input the file path. ^Z to exit:")
 			while True:
@@ -49,10 +39,8 @@ def imp_main():
 				else:
 					rename(file, args["--format"])
 		else:
-			files = args["<file>"]
-			for file_pattern in file_patterns:
-				for file in glob.iglob(file_pattern):
-					rename(file, args["--format"])
+			for file in gen_file(args["<file>"]):
+				rename(file, args["--format"])
 
 if __name__ == "__main__":
 	main()
