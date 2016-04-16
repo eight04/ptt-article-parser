@@ -7,12 +7,6 @@ from .version import __version__
 
 ENCODING = "uao_decode"
 
-def decode_func(b):
-	return b.decode(ENCODING)
-
-class NoMatch(Exception):
-	pass
-
 class Article:
 	def __init__(self, source):
 		"""Give source Bytes to build an article"""
@@ -125,6 +119,7 @@ class Article:
 		pass
 		
 class ForwardHead:
+	"""Forwarding info header"""
 	def __init__(self, board, aid, start, end):
 		self.board = board
 		self.aid = aid
@@ -132,6 +127,7 @@ class ForwardHead:
 		self.end = end
 		
 class Header:
+	"""Article header"""
 	def __init__(self, author, board, title, time, start, end):
 		self.author = author
 		self.board = board
@@ -141,6 +137,7 @@ class Header:
 		self.end = end
 
 class Sign:
+	"""Article sign"""
 	def __init__(self, ip, url, start, end):
 		self.ip = ip
 		self.url = url
@@ -148,6 +145,7 @@ class Sign:
 		self.end = end
 
 class ForwardFoot:
+	"""Forwarding info footer"""
 	def __init__(self, author, ip, time, start, end):
 		self.author = author
 		self.ip = ip
@@ -156,6 +154,7 @@ class ForwardFoot:
 		self.end = end
 
 class Edit:
+	"""Edit record"""
 	def __init__(self, author, ip, time, start, end):
 		"""Create edit record"""
 		self.author = author
@@ -165,26 +164,10 @@ class Edit:
 		self.end = end
 
 class Push:
-	def __init__(self, source):
+	"""Push record"""
+	def __init__(self, type, author, message, time):
 		"""Create push record"""
-		self.source = source
-
-	def getType(self):
-		"""Get the type of push"""
-		pass
-
-	def getUser(self):
-		"""Get user"""
-		pass
-
-	def getContent(self):
-		"""Get push content"""
-		pass
-
-	def getIP(self):
-		"""Get IP address"""
-		pass
-
-	def getTime(self):
-		"""Get time"""
-		pass
+		self.type = type
+		self.author = author
+		self.message = message
+		self.time = time

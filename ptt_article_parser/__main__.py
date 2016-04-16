@@ -33,6 +33,7 @@ def do_rename(file, format):
 			rename(f, format)
 
 def main():
+	"""Main entry"""
 	args = docopt.docopt(__doc__, version=__version__)
 	
 	# Rename file
@@ -49,5 +50,6 @@ def main():
 		else:
 			for file in args["<file>"]:
 				do_rename(file, args["--format"])
+				
 if __name__ == "__main__":
 	main()
