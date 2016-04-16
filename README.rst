@@ -31,7 +31,7 @@ Usage
 	  -f --format=<format>  Set output format. 
 							[default: [{board}] {title} [{author}] ({time:%Y%m%d%H%M%S}).ans]
 	  -i --interactive      Use interactive mode, get file name from stdin.
-	  <file>                File path. You can use glob pattern
+	  <file>                File path. If the file doesn't exists, pap will try to parse it as glob pattern.
 
 For example:
 
@@ -63,6 +63,12 @@ Dependencies
 
 Changelog
 ---------
+
+* 0.2.0 (Apr 16, 2016)
+
+  - Change how glob pattern work.
+  - Fix same file name bug.
+  - Rewrite. Try matching best result.
 
 * 0.1.0 (Apr 15, 2016)
 
