@@ -14,7 +14,7 @@ Options:
   -f --format=<format>  Set output format. 
                         [default: [{board}] {title} [{author}] ({time:%Y%m%d%H%M%S}).ans]
   -i --interactive      Use interactive mode, get file name from stdin.
-  <file>                File path. You can use glob pattern
+  <file>                File path. If the file doesn't exists, pap will try to parse it as glob pattern.
   
 """
 
