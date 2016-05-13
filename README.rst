@@ -58,6 +58,11 @@ Todos
 Changelog
 ---------
 
+* 0.2.1 (May 14, 2016)
+
+  - Extract author from old_edits.
+  - Fix installing issue (maybe more?).
+
 * 0.2.0 (Apr 16, 2016)
 
   - Change how glob pattern work.
