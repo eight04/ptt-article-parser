@@ -45,7 +45,7 @@ class Article:
 			
 		# old edits
 		self.old_edits = []
-		matches = re.finditer(r"※ 編輯: (\w+)\s*來自: (\d+\.\d+\.\d+\.\d+)      \((\d+/\d+ \d+:\d+)\)", self.source)
+		matches = re.finditer(r"※ 編輯: (\w+)\s*來自: (\d+\.\d+\.\d+\.\d+)\s*\((\d+/\d+ \d+:\d+)\)", self.source)
 		for match in matches:
 			author, ip, time = match.groups()
 			time = datetime.datetime.strptime(time, "%m/%d %H:%M")
@@ -69,6 +69,8 @@ class Article:
 			return self.headers[0].author
 		if self.edits:
 			return self.edits[0].author
+		if self.old_edits:
+			return self.old_edits[0].author
 		return None
 
 	def getTime(self):
