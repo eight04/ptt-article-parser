@@ -22,7 +22,6 @@ import docopt, os.path, glob
 
 from . import Article, __version__
 from .tools import rename
-from .helper import gen_file
 
 def do_rename(file, format):
 	"""Use glob pattern if file dosn't exist"""
