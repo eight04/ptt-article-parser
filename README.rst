@@ -48,18 +48,12 @@ Output screenshot
 Notes
 -----
 
-* Big5UAO decoder was forked from `andycjw/uao_decode.py<https://gist.github.com/andycjw/5617496>`__.
+* Big5UAO decoder was forked from `andycjw/uao_decode.py <https://gist.github.com/andycjw/5617496>`__.
 
 Todos
 -----
 
 * Identify article part and pushes part.
-
-Dependencies
-------------
-
-* docopt
-* safeprint
 
 Changelog
 ---------
