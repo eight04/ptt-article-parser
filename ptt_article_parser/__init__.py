@@ -3,7 +3,8 @@
 import re, datetime
 
 from . import uao_decode
-from .version import __version__
+
+__version__ = "0.2.0"
 
 ENCODING = "uao_decode"
 
