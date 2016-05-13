@@ -4,7 +4,7 @@ import re, datetime
 
 from . import uao_decode
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 ENCODING = "uao_decode"
 
