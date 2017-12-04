@@ -6,7 +6,7 @@ PTT Article Parser
 Features
 --------
 
-* 根據文章標題，重新命名檔案名稱
+* 根據文章標題或 .DIR 檔案，重新命名檔案名稱
 * 白金緩慢增加中
 
 Install
@@ -21,15 +21,19 @@ Usage
 
 ::
 
+	PTT Article Parser (PAP)
+
 	Usage:
-	  pap rename [--format=<format>] <file>...
-	  pap rename [--format=<format>] --interactive
-	  pap --help
+	  pap rename [--format=<format>] [--dir=<file>] <file>...
+	  pap rename [--format=<format>] [--dir=<file>] --interactive
+	  pap (--help | --version)
 		
 	Options:
+	  -v --version          Show version.
 	  -h --help             Show this.
 	  -f --format=<format>  Set output format. 
 							[default: [{board}] {title} [{author}] ({time:%Y%m%d%H%M%S}).ans]
+	  -d --dir=<file>       Location of ".DIR" file. [default: ./.DIR]
 	  -i --interactive      Use interactive mode, get file name from stdin.
 	  <file>                File path. If the file doesn't exists, pap will try to parse it as glob pattern.
 
@@ -57,6 +61,10 @@ Todos
 
 Changelog
 ---------
+
+* 0.3.0 (Dec 5, 2017)
+
+  - Parse .DIR file, use the title by default.
 
 * 0.2.1 (May 14, 2016)
 
