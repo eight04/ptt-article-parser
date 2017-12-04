@@ -26,39 +26,41 @@ from .tools import rename
 
 def do_rename(file, format, dir=None):
 	"""Use glob pattern if file dosn't exist"""
-	if os.path.isfile(file):
+	def get_files(file):
+		if os.path.isfile(file):
+			yield file
+		else:
+			yield from glob.iglob(file)
+
+	for file in get_files(file):
 		rename(file, format, dir)
-	else:
-		for f in glob.iglob(file):
-			rename(f, format, dir)
 
 def main():
 	"""Main entry"""
 	args = docopt.docopt(__doc__, version=__version__)
 	
-	# Parse .DIR
-	dir = None
-	if args["--dir"]:
-		from .dir import DIR
-		try:
-			dir = DIR.from_file(args["--dir"])
-		except OSError:
-			pass
-	
 	# Rename file
 	if args["rename"]:
-		if args["--interactive"]:
+		def get_dir():
+			from .dir import DIR
+			try:
+				return DIR.from_file(args["--dir"])
+			except OSError:
+				pass
+				
+		def files_from_input():
 			print("You are using interactive mode, please input the file path. ^Z to exit:")
 			while True:
 				try:
 					file = input()
+					if file:
+						yield file
 				except EOFError:
 					break
-				else:
-					do_rename(file, args["--format"], dir=dir)
-		else:
-			for file in args["<file>"]:
-				do_rename(file, args["--format"], dir=dir)
+		
+		dir = get_dir()
+		for file in files_from_input() if args["--interactive"] else args["<file>"]:
+			do_rename(file, args["--format"], dir=dir)
 				
 if __name__ == "__main__":
 	main()

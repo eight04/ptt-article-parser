@@ -1,30 +1,32 @@
 #! python3
 
-from xcute import cute, Bump, Version
+from xcute import cute, exc
 
 cute(
+	pkg_name = "ptt_article_parser",
 	test = 'readme_build',
-	test_err = ["readme_show", "exit 1"],
 	bump_pre = 'test',
-	bump = Bump("ptt_article_parser/__init__.py"),
 	bump_post = ['dist', 'release', 'publish', 'install'],
-	dist = 'python setup.py sdist bdist_wheel',
+	dist = 'rm -r build dist & python setup.py sdist bdist_wheel',
 	release = [
 		'git add .',
 		'git commit -m "Release v{version}"',
 		'git tag -a v{version} -m "Release v{version}"'
 	],
 	publish = [
-		'twine upload dist/*{version}[.-]*',
+		'twine upload dist/*',
 		'git push --follow-tags'
 	],
 	publish_err = 'start https://pypi.python.org/pypi/ptt-article-parser/',
 	install = 'pip install -e .',
 	install_err = 'elevate -c -w pip install -e .',
-	readme_build = "python setup.py --long-description > %temp%/ld && rst2html --no-raw --exit-status=1 --verbose %temp%/ld %temp%/ld.html",
-	readme_show = "start %temp%/ld.html",
-	readme = "readme_build",
-	readme_err = 'readme_show',
-	readme_post = 'readme_show',
-	version = [Version('ptt_article_parser/__init__.py'), 'echo {version}']
+	readme_build = [
+		'python setup.py --long-description | x-pipe build/ld.rst',
+		'rst2html --no-raw --exit-status=1 --verbose '
+			'build/ld.rst build/ld.html'
+	],
+	readme_build_err = ['readme_show', exc],
+	readme_show = 'start build/ld.html',
+	readme = 'readme_build',
+	readme_post = 'readme_show'
 )
