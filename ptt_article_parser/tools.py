@@ -6,8 +6,9 @@ from safeprint import print
 
 from . import Article
 from .helper import safe_file_name, format_dummy
+from .dir import DIR
 
-def rename(file, format_spec):
+def rename(file, format_spec, dir=DIR()):
 	"""Rename article with specified format"""
 	file = pathlib.Path(file)
 	
@@ -17,10 +18,10 @@ def rename(file, format_spec):
 	
 	new_file = format_spec.format(
 		article = article,
-		title = article.getTitle(),
-		author = article.getAuthor(),
+		title = dir.getTitle(file.name) or article.getTitle(),
+		author = article.getAuthor() or dir.getAuthor(file.name),
 		board = article.getBoard(),
-		time = article.getTime() or format_dummy
+		time = article.getTime() or dir.getTime(file.name) or format_dummy
 	)
 	new_file = safe_file_name(new_file)
 	new_file = file.with_name(new_file)
