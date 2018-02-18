@@ -7,13 +7,16 @@ from .__pkginfo__ import __version__
 
 ENCODING = "uao_decode"
 
+def strip_color(b):
+	return re.sub(br"\x1b\[[\d;]*m", br"", b)
+
 class Article:
 	def __init__(self, source):
 		"""Give source Bytes to build an article"""
 		self.original_source = source
 		
 		# remove ansi, encode to string
-		self.source = re.sub(br"\x1b\[[\d;]*m", br"", source).decode(ENCODING)
+		self.source = strip_color(source).decode(ENCODING)
 		
 		# get headers
 		matches = re.finditer(r'作者:?\s*(.+?) *(?:看板:?\s*([a-zA-Z0-9-_]+) *)?\n\s*標題:?\s*(.+?) *\n\s*時間:?\s*(\w+ \w+  ?\d+ \d+:\d+:\d+ \d+) *\n?(?:─+ *\r?\n?)?', self.source)
