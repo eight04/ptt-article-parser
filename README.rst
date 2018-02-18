@@ -62,6 +62,10 @@ Todos
 Changelog
 ---------
 
+* 0.4.0 (Feb 19, 2018)
+
+  - Change: automatically find .DIR file.
+
 * 0.3.0 (Dec 5, 2017)
 
   - Parse .DIR file, use the title by default.
