@@ -18,10 +18,10 @@ def rename(file, format_spec, dir=DIR()):
 	
 	new_file = format_spec.format(
 		article = article,
-		title = dir.getTitle(file.name) or article.getTitle(),
-		author = article.getAuthor() or dir.getAuthor(file.name),
+		title = dir.getTitle(file) or article.getTitle(),
+		author = article.getAuthor() or dir.getAuthor(file),
 		board = article.getBoard(),
-		time = article.getTime() or dir.getTime(file.name) or format_dummy
+		time = article.getTime() or dir.getTime(file) or format_dummy
 	)
 	new_file = safe_file_name(new_file)
 	new_file = file.with_name(new_file)

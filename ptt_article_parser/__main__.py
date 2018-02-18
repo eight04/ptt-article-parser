@@ -13,7 +13,7 @@ Options:
   -h --help             Show this.
   -f --format=<format>  Set output format. 
                         [default: [{board}] {title} [{author}] ({time:%Y%m%d%H%M%S}).ans]
-  -d --dir=<file>       Location of ".DIR" file. [default: ./.DIR]
+  -d --dir=<file>       Read additional ".DIR" file. The tool always tries to read the ".DIR" file under the parent folder of the article. Use this option to read from other locations.
   -i --interactive      Use interactive mode, get file name from stdin.
   <file>                File path. If the file doesn't exists, pap will try to parse it as glob pattern.
   
@@ -30,7 +30,7 @@ def do_rename(file, format, dir=None):
 		if os.path.isfile(file):
 			yield file
 		else:
-			yield from glob.iglob(file)
+			yield from glob.iglob(file, recursive=True)
 
 	for file in get_files(file):
 		rename(file, format, dir)
@@ -41,13 +41,6 @@ def main():
 	
 	# Rename file
 	if args["rename"]:
-		def get_dir():
-			from .dir import DIR
-			try:
-				return DIR.from_file(args["--dir"])
-			except OSError:
-				pass
-				
 		def files_from_input():
 			print("You are using interactive mode, please input the file path. ^Z to exit:")
 			while True:
@@ -57,8 +50,12 @@ def main():
 						yield file
 				except EOFError:
 					break
-		
-		dir = get_dir()
+					
+		from .dir import DIR
+		dir = DIR()
+		if args["--dir"]:
+			dir.read_file(args["--dir"])
+			
 		for file in files_from_input() if args["--interactive"] else args["<file>"]:
 			do_rename(file, args["--format"], dir=dir)
 				
