@@ -1,6 +1,6 @@
 #! python3
 
-import pathlib, datetime
+import pathlib
 
 from safeprint import print
 

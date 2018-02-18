@@ -1,3 +1,6 @@
+[MASTER]
+ignore=uao_decode.py
+
 [MESSAGES CONTROL]
 disable=
 	raw-checker-failed, locally-disabled, locally-enabled, file-ignored,
@@ -49,4 +52,5 @@ min-public-methods=0
 max-parents=14
 
 [TYPECHECK]
-#ignored-modules=worker, comiccrawler.mods.*
+# https://github.com/PyCQA/pylint/issues/224
+ignored-modules=pathlib
