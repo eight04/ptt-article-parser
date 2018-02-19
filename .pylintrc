@@ -25,4 +25,5 @@ indent-string='\t'
 # https://github.com/PyCQA/pylint/issues/224
 ignored-classes=optparse.Values,thread._local,_thread._local,pathlib.PurePath
 
+[VARIABLES]
 init-import=yes
