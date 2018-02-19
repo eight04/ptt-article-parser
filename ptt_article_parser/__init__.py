@@ -1,7 +1,8 @@
 #! python3
 # pylint: disable=invalid-name, line-too-long
 
-import re, datetime
+import re
+import datetime
 
 from . import uao_decode # pylint: disable=unused-import
 from .__pkginfo__ import __version__

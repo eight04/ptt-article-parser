@@ -1,56 +1,28 @@
 [MASTER]
-ignore=uao_decode.py
+ignore=CVS,uao_decode.py
 
 [MESSAGES CONTROL]
 disable=
-	raw-checker-failed, locally-disabled, locally-enabled, file-ignored,
-	suppressed-message, fixme,
-	
-	# seems continuation checker doesn't work with tabs
-	mixed-indentation, bad-continuation,
-	
+	# https://github.com/PyCQA/pylint/issues/289
+	bad-continuation,
+
 	# https://github.com/PyCQA/pylint/issues/1368
 	bad-whitespace,
-	
-	anomalous-backslash-in-string,
-	global-statement,
-	missing-docstring, multiple-imports,
-	no-self-use,
-	redefined-outer-name, redefined-builtin,
-	trailing-whitespace,
-	unused-argument
 
-[REPORTS]
-# reports=yes
-# score=yes
-
-[REFACTORING]
-# Maximum number of nested blocks for function / method body
-max-nested-blocks=5
+	design,
+	missing-docstring,
+	redefined-builtin,
+	trailing-whitespace
 
 [BASIC]
-argument-rgx=(([a-z][a-z0-9_]{,30})|(_[a-z0-9_]*))$
-attr-rgx=(([a-z][a-z0-9_]{1,30})|(_[a-z0-9_]*)|([A-Z_][A-Z0-9_]*))$
-const-rgx=^(([A-Z_][A-Z0-9_]*)|(__.*__)|[a-z_][a-z0-9_]*)$
-method-rgx=^([a-z_]+|test_[a-zA-Z_]+)$
-variable-rgx=(([a-z][a-z0-9_]{,30})|(_[a-z0-9_]*))$
+const-naming-style=any
 
 [FORMAT]
-no-space-check=trailing-comma,empty-line
-indent-string="\t"
-
-[VARIABLES]
-callbacks=_
-init-import=yes
-redefining-builtins-modules=six.moves,future.builtins,safeprint
-
-[DESIGN]
-max-args=10
-max-attributes=21
-max-locals=30
-min-public-methods=0
-max-parents=14
+indent-after-paren=1
+indent-string='\t'
 
 [TYPECHECK]
 # https://github.com/PyCQA/pylint/issues/224
-ignored-modules=pathlib
+ignored-classes=optparse.Values,thread._local,_thread._local,pathlib.PurePath
+
+init-import=yes
