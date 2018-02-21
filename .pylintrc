@@ -1,0 +1,29 @@
+[MASTER]
+ignore=CVS,uao_decode.py
+
+[MESSAGES CONTROL]
+disable=
+	# https://github.com/PyCQA/pylint/issues/289
+	bad-continuation,
+
+	# https://github.com/PyCQA/pylint/issues/1368
+	bad-whitespace,
+
+	design,
+	missing-docstring,
+	redefined-builtin,
+	trailing-whitespace
+
+[BASIC]
+const-naming-style=any
+
+[FORMAT]
+indent-after-paren=1
+indent-string='\t'
+
+[TYPECHECK]
+# https://github.com/PyCQA/pylint/issues/224
+ignored-classes=optparse.Values,thread._local,_thread._local,pathlib.PurePath
+
+[VARIABLES]
+init-import=yes

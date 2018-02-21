@@ -1,7 +1,10 @@
+# pylint: disable=invalid-name
+
 import datetime
 import pathlib
 import struct
-from . import uao_decode, strip_color
+from . import uao_decode # pylint: disable=unused-import
+from . import strip_color
 
 FILE_HEAD = struct.Struct("!33sc14s6s73sc")
 
@@ -19,18 +22,21 @@ class DIR:
 		self.read_file(file.with_name(".DIR"))
 		if file.name in self.items:
 			return self.items[file.name].title
+		return None
 		
 	def getAuthor(self, file):
 		file = pathlib.Path(file)
 		self.read_file(file.with_name(".DIR"))
 		if file.name in self.items:
 			return self.items[file.name].owner
+		return None
 		
 	def getTime(self, file):
 		file = pathlib.Path(file)
 		self.read_file(file.with_name(".DIR"))
 		if file.name in self.items:
 			return self.items[file.name].date
+		return None
 			
 	def read_file(self, file, throw_error=False):
 		file = pathlib.Path(file).resolve()
@@ -48,13 +54,13 @@ class DIR:
 		self.read_cache.add(str(file))
 				
 		for args in FILE_HEAD.iter_unpack(content):
-			filename, savemode, owner, date, title, filemode = (
+			filename, _savemode, owner, date, title, _filemode = (
 				to_str(strip_color(i)) for i in args)
 			self.items[filename] = Item(owner, date, title)
 
 class Item:
 	def __init__(self, owner, date, title):
 		self.owner = owner
-		month, sep, day = date.partition("/")
+		month, _sep, day = date.partition("/")
 		self.date = datetime.datetime.today().replace(month=int(month), day=int(day))
 		self.title = title

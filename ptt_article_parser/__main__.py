@@ -13,26 +13,30 @@ Options:
   -h --help             Show this.
   -f --format=<format>  Set output format. 
                         [default: [{board}] {title} [{author}] ({time:%Y%m%d%H%M%S}).ans]
-  -d --dir=<file>       Read additional ".DIR" file. The tool always tries to read the ".DIR" file under the parent folder of the article. Use this option to read from other locations.
+  -d --dir=<file>       Read additional ".DIR" file. The tool always tries to 
+                        read the ".DIR" file under the parent folder of the
+                        article. Use this option to read from other locations.
   -i --interactive      Use interactive mode, get file name from stdin.
-  <file>                File path. If the file doesn't exists, pap will try to parse it as glob pattern.
+  <file>                File path. If the file doesn't exists, pap will try to
+                        parse it as glob pattern.
   
 """
 
-import docopt, os.path, glob
-
-from . import Article, __version__
+import glob
+import os.path
+import docopt
+from . import __version__
 from .tools import rename
 
-def do_rename(file, format, dir=None):
+def do_rename(pattern, format, dir=None):
 	"""Use glob pattern if file dosn't exist"""
-	def get_files(file):
-		if os.path.isfile(file):
-			yield file
+	def get_files():
+		if os.path.isfile(pattern):
+			yield pattern
 		else:
-			yield from glob.iglob(file, recursive=True)
+			yield from glob.iglob(pattern, recursive=True)
 
-	for file in get_files(file):
+	for file in get_files():
 		rename(file, format, dir)
 
 def main():

@@ -1,6 +1,6 @@
 #! python
 
-import re, glob
+import re
 
 fn_repl = {
 	"/": "／",
