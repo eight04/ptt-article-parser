@@ -21,28 +21,31 @@ Usage
 
 ::
 
-	PTT Article Parser (PAP)
+  PTT Article Parser (PAP)
 
-	Usage:
-	  pap rename [--format=<format>] [--dir=<file>] <file>...
-	  pap rename [--format=<format>] [--dir=<file>] --interactive
-	  pap (--help | --version)
-		
-	Options:
-	  -v --version          Show version.
-	  -h --help             Show this.
-	  -f --format=<format>  Set output format. 
-							[default: [{board}] {title} [{author}] ({time:%Y%m%d%H%M%S}).ans]
-	  -d --dir=<file>       Location of ".DIR" file. [default: ./.DIR]
-	  -i --interactive      Use interactive mode, get file name from stdin.
-	  <file>                File path. If the file doesn't exists, pap will try to parse it as glob pattern.
+  Usage:
+    pap rename [--format=<format>] [--dir=<file>] <file>...
+    pap rename [--format=<format>] [--dir=<file>] --interactive
+    pap (--help | --version)
+
+  Options:
+    -v --version          Show version.
+    -h --help             Show this.
+    -f --format=<format>  Set output format.
+                          [default: [{board}] {title} [{author}] ({time:%Y%m%d%H%M%S}).ans]
+    -d --dir=<file>       Read additional ".DIR" file. The tool always tries to
+                          read the ".DIR" file under the parent folder of the
+                          article. Use this option to read from other locations.
+    -i --interactive      Use interactive mode, get file name from stdin.
+    <file>                File path. If the file doesn't exists, pap will try to
+                          parse it as glob pattern.
 
 For example:
 
 ::
 
 	pap rename ./M.*
-	
+
 Output screenshot
 ----------------------
 
