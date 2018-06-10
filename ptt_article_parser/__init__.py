@@ -4,13 +4,14 @@
 import re
 import datetime
 
-from . import uao_decode # pylint: disable=unused-import
+from uao import register_uao
+
 from .__pkginfo__ import __version__
 
-ENCODING = "uao_decode"
+register_uao()
 
 def strip_color(b):
-	return re.sub(br"\x1b\[[\d;]*m", br"", b)
+	return re.sub(br"\x1b\[[\d;]*[a-zA-Z]", br"", b)
 
 class Article:
 	def __init__(self, source):
@@ -18,7 +19,7 @@ class Article:
 		self.original_source = source
 
 		# remove ansi, encode to string
-		self.source = strip_color(source).decode(ENCODING)
+		self.source = strip_color(source).decode("big5-uao")
 
 		# get headers
 		matches = re.finditer(r'作者:?\s*(.+?) *(?:看板:?\s*([a-zA-Z0-9-_]+) *)?\n\s*標題:?\s*(.+?) *\n\s*時間:?\s*(\w+ \w+  ?\d+ \d+:\d+:\d+ \d+) *\n?(?:─+ *\r?\n?)?', self.source)
