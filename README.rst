@@ -12,7 +12,7 @@ Features
 Install
 -------
 
-::
+From `pypi <https://pypi.org/project/ptt-article-parser/>`__::
 
 	pip install ptt-article-parser
 
@@ -52,18 +52,15 @@ Output screenshot
 .. image:: http://i.imgur.com/zISlFeP.png
    :alt: screenshot
 
-Notes
------
-
-* Big5UAO decoder was forked from `andycjw/uao_decode.py <https://gist.github.com/andycjw/5617496>`__.
-
-Todos
------
-
-* Identify article part and pushes part.
-
 Changelog
 ---------
+
+* 0.5.0 (Jun 12, 2018)
+
+  - Update dependencies.
+  - Fix: handle crlf.
+  - Refactor: ptt_article_parser.tools -> ptt_article_parser.rename
+  - Drop uao_decode.py, switch to uao.
 
 * 0.4.0 (Feb 19, 2018)
 
