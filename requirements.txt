@@ -1,5 +1,5 @@
-docutils==0.12
-pyxcute~=0.1.2
-safeprint~=0.1.1
-twine==1.6.5
-pylint~=1.8.2
+docutils>=0.14,<0.15
+pyxcute>=0.5.1,<0.6
+twine>=1.6.5,<2
+pylint>=1.8.4,<2
+-e .
