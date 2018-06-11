@@ -22,23 +22,23 @@ class Article:
 		self.source = strip_color(source).decode("big5-uao")
 
 		# get headers
-		matches = re.finditer(r'作者:?\s*(.+?) *(?:看板:?\s*([a-zA-Z0-9-_]+) *)?\n\s*標題:?\s*(.+?) *\n\s*時間:?\s*(\w+ \w+  ?\d+ \d+:\d+:\d+ \d+) *\n?(?:─+ *\r?\n?)?', self.source)
+		matches = re.finditer(r'作者:?\s*(.+?) *(?:看板:?\s*([a-zA-Z0-9-_]+) *)?\r?\n\s*標題:?\s*(.+?) *\r?\n\s*時間:?\s*(\w+ \w+  ?\d+ \d+:\d+:\d+ \d+) *\r?\n?(?:─+ *\r?\n?)?', self.source)
 		self.headers = [Header(*m.groups(), m.start, m.end) for m in matches]
 
 		# get forward heads
-		matches = re.finditer(r"※ \[本文轉錄自\s*([a-zA-Z0-9-_]+)\s*看板\s*(#[a-zA-Z0-9-_]{8})\s*\] *\n?", self.source)
+		matches = re.finditer(r"※ \[本文轉錄自\s*([a-zA-Z0-9-_]+)\s*看板\s*(#[a-zA-Z0-9-_]{8})\s*\] *\r?\n?", self.source)
 		self.forward_heads = [ForwardHead(*m.groups(), m.start(), m.end()) for m in matches]
 
 		# get forward foot
-		matches = re.finditer(r"※ 發信站: 批踢踢實業坊\(ptt\.cc\)\s*※ 轉錄者: (\w+) \((\d+.\d+.\d+.\d+)\),\s*(?:時間:\s*)?(\d+/\d+/\d+ \d+:\d+:\d+) *\n?", self.source)
+		matches = re.finditer(r"※ 發信站: 批踢踢實業坊\(ptt\.cc\)\s*※ 轉錄者: (\w+) \((\d+.\d+.\d+.\d+)\),\s*(?:時間:\s*)?(\d+/\d+/\d+ \d+:\d+:\d+) *\r?\n?", self.source)
 		self.forward_foots = [ForwardFoot(*m.groups(), m.start(), m.end()) for m in matches]
 
 		# get sign
-		match = re.search(r"※ 發信站: 批踢踢實業坊\(ptt\.cc\), 來自: (\d+\.\d+\.\d+\.\d+) *\n※ 文章網址: (http\S+) *\n?", self.source)
+		match = re.search(r"※ 發信站: 批踢踢實業坊\(ptt\.cc\), 來自: (\d+\.\d+\.\d+\.\d+) *\r?\n※ 文章網址: (http\S+) *\r?\n?", self.source)
 		self.sign = match and Sign(*match.groups(), match.start(), match.end())
 
 		# old sign
-		match = re.search(r"※ 發信站: 批踢踢實業坊\(ptt\.cc\)\n◆ From: (\d+\.\d+\.\d+\.\d+)", self.source)
+		match = re.search(r"※ 發信站: 批踢踢實業坊\(ptt\.cc\)\r?\n◆ From: (\d+\.\d+\.\d+\.\d+)", self.source)
 		self.old_sign = match and Sign(match.group(1), None, match.start(), match.end())
 
 		# get edits
