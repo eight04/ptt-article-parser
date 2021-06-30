@@ -22,6 +22,8 @@ Options:
 
 """
 
+# pylint: disable=import-outside-toplevel
+
 import glob
 import os.path
 import docopt
