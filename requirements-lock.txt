@@ -37,6 +37,7 @@ twine==3.4.1
 uao==0.2.0
 urllib3==1.26.6
 webencodings==0.5.1
+wheel==0.36.2
 win-unicode-console==0.5
 wrapt==1.12.1
 zipp==3.4.1
