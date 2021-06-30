@@ -1,6 +1,9 @@
 PTT Article Parser
 ==================
 
+.. image:: https://github.com/eight04/ptt-article-parser/actions/workflows/test.yml/badge.svg
+   :target: https://github.com/eight04/ptt-article-parser/actions/workflows/test.yml
+
 一個用來分析 PTT 文章的工具。
 
 Features
@@ -54,6 +57,10 @@ Output screenshot
 
 Changelog
 ---------
+
+* 0.6.0 (Jun 30, 2021)
+
+  - Bump dependencies.
 
 * 0.5.0 (Jun 12, 2018)
 
