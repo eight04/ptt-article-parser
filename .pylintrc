@@ -12,7 +12,8 @@ disable=
 	design,
 	missing-docstring,
 	redefined-builtin,
-	trailing-whitespace
+	trailing-whitespace,
+  unnecessary-pass
 
 [BASIC]
 const-naming-style=any
