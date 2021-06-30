@@ -6,7 +6,7 @@ import datetime
 
 from uao import register_uao
 
-from .__pkginfo__ import __version__
+__version__ = "0.5.0"
 
 register_uao()
 
