@@ -6,7 +6,7 @@ import datetime
 
 from uao import register_uao
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
 register_uao()
 
